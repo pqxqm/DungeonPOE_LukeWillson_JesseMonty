@@ -28,12 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            lblDisplay = new Label();
+            SuspendLayout();
+            // 
+            // lblDisplay
+            // 
+            lblDisplay.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDisplay.Location = new Point(12, 9);
+            lblDisplay.Name = "lblDisplay";
+            lblDisplay.Size = new Size(776, 432);
+            lblDisplay.TabIndex = 0;
+            lblDisplay.Text = "lblDisplay";
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblDisplay);
+            Name = "Form1";
             Text = "Form1";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Label lblDisplay;
     }
 }

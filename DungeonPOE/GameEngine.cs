@@ -18,13 +18,13 @@ namespace DungeonPOE
             numberOfLevels = newnumberOfLevels;
             random = new Random();
 
-            int width = random.Next(MIN_SIZE);
-            int height = random.Next(MAX_SIZE); // will only go up to 19 btw, cause of how it works
+            int width = random.Next(MIN_SIZE, MAX_SIZE + 1);
+            int height = random.Next(MIN_SIZE, MAX_SIZE + 1);
 
             currentLevel = new Level(width, height);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return currentLevel.ToString();
         }
