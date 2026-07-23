@@ -9,9 +9,9 @@ namespace DungeonPOE
     {
         private Position position;
 
-        public Tile(Position position)
+        public Tile(Position newposition)
         {
-            this.position = position;
+            position = newposition;
         }
 
         public int X
