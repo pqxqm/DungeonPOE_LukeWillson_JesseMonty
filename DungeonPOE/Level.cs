@@ -10,39 +10,102 @@ namespace DungeonPOE
         private int width;
         private int height;
 
+        //Stores the hero of this level
+        private HeroTile hero;
+
+        //A single Random object is shared when selectting random tiles from the level
+       private static Random random = new Random();
+
         //Provides read-only access to the level's 2D tile array
         public Tile[,] Tiles
         { 
             get { return tiles; }
         }
+
+        //Provides read-only access to the hero of this level
+        public HeroTile Hero
+        {
+            get { return hero; }
+        }
         public enum TileType // more will be added later when we work on the enum (sidenote will be called as Level.TileType in other codes)
         {
             empty,
-            wall
+            wall,
+            Hero
         }
 
-        public Level(int newwidth, int newheight)
+        // Creates a level with the supplied width and height.
+        // existingHero is optional. If no hero is supplied,
+        // a new HeroTile will be created.
+        public Level(
+            int newwidth,
+            int newheight,
+            HeroTile existingHero = null)
         {
+            // Store the dimensions of the level.
             width = newwidth;
             height = newheight;
+
+            // Create the two-dimensional tile array.
             tiles = new Tile[newwidth, newheight];
+
+            // Fill the level with empty tiles and boundary walls.
             InitialiseTiles();
+
+            // Find a random empty position for the hero.
+            Position heroPosition = GetRandomEmptyPosition();
+
+            if (existingHero == null)
+            {
+                // No hero was supplied, so create a new hero.
+                hero = (HeroTile)CreateTile(
+                    TileType.Hero,
+                    heroPosition
+                );
+            }
+            else
+            {
+                // Reuse the existing hero so that its health
+                // and other information carry between levels.
+                hero = existingHero;
+
+                // Update the hero's coordinates.
+                hero.X = heroPosition.X;
+                hero.Y = heroPosition.Y;
+
+                // Place the existing hero in the new level.
+                tiles[heroPosition.X, heroPosition.Y] = hero;
+            }
+
+            // Update the hero's surrounding vision tiles.
+            hero.UpdateVision(this);
         }
+
 
         private Tile CreateTile(TileType type, Position newposition) //will be changed later when we work on the enum
         {
-            Tile tile = null;
+        Tile tile;
             
             switch(type)
             {
+            //Create an empty floor tile
                 case TileType.empty:
                     tile = new EmptyTile(newposition);
                     break;
                 case TileType.wall:
                     tile = new WallTile(newposition);
                     break;
-            }
-            tiles[newposition.X, newposition.Y] = tile;
+                case TileType.Hero:
+                tile = new HeroTile(newposition);
+                break;
+
+            default:
+                //Prevent invalid tile types from being created
+                throw new ArgumentException("Invalid tile type");
+        }
+
+        //Store the new tile in the level's 2D array
+        tiles[newposition.X, newposition.Y] = tile;
             return tile;
         }
 
@@ -70,7 +133,29 @@ namespace DungeonPOE
             }
         }
 
-        public override string ToString()
+    //Find and return a random empty position in the level
+    private Position GetRandomEmptyPosition()
+    
+     { 
+        int randomX;
+        int randomY;
+
+        do
+        {
+            //Start at 1 and stop before width - 1 so that boundry wall positions are not selected
+            randomX = random.Next(1, width - 1);
+            randomY = random.Next(1, height - 1);
+
+        }
+        //Continue looping until an empty tile is found at the random position
+        while (!(tiles[randomX, randomY] is EmptyTile));
+
+        //Return the empty tiles coordinates as a Position object
+        return new Position(randomX, randomY);
+    }
+
+
+    public override string ToString()
         {
             string result = "";
 
