@@ -10,9 +10,15 @@ namespace DungeonPOE
         private int width;
         private int height;
 
+        //Provides read-only access to the level's 2D tile array
+        public Tile[,] Tiles
+        { 
+            get { return tiles; }
+        }
         public enum TileType // more will be added later when we work on the enum (sidenote will be called as Level.TileType in other codes)
         {
-            empty
+            empty,
+            wall
         }
 
         public Level(int newwidth, int newheight)
@@ -32,6 +38,9 @@ namespace DungeonPOE
                 case TileType.empty:
                     tile = new EmptyTile(newposition);
                     break;
+                case TileType.wall:
+                    tile = new WallTile(newposition);
+                    break;
             }
             tiles[newposition.X, newposition.Y] = tile;
             return tile;
@@ -43,7 +52,20 @@ namespace DungeonPOE
             {
                 for (int newy = 0; newy < height; newy++)
                 {
-                    CreateTile(TileType.empty, new Position(newx, newy));
+                    bool isBoundry =
+                        newx == 0 ||
+                        newx == width - 1 ||
+                        newy == 0 || 
+                        newy == height - 1;
+
+                    if (isBoundry)
+                    {
+                        CreateTile(TileType.wall, new Position(newx, newy));
+                    }
+                    else
+                    {
+                        CreateTile(TileType.empty, new Position(newx, newy));
+                    }
                 }
             }
         }
