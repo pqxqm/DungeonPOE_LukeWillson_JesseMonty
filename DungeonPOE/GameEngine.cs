@@ -24,6 +24,40 @@ namespace DungeonPOE
             currentLevel = new Level(width, height);
         }
 
+        //Attempts to move the hero in the specified direction. Returns true if the move was successful, false otherwise.
+        private bool MoveHero(Direction direction)
+        { 
+            //None does not correspond to a valid vision index
+            if (direction == Direction.None)
+            {
+                return false;
+            }
+
+            HeroTile hero = currentLevel.Hero;
+
+            //Convert the direction value to the matching index of the hero's vision array
+            Tile targetTile = hero.Vision[(int)direction];
+
+            if(!(targetTile is EmptyTile))
+            {
+                return false;
+            }
+
+            //Swap the hero with the empty target tile
+            currentLevel.SwapTiles(hero, targetTile);
+
+            //Refresh the hero's vision after the move
+            hero.UpdateVision(currentLevel);
+            return true;
+        }
+
+        //Recieves movement requests from the windows form
+        public void TriggerMovement(Direction direction)
+        {
+            MoveHero(direction);
+        }
+        //It will include enemies later
+        // MoveHero(direction);
         public override string ToString()
         {
             return currentLevel.ToString();

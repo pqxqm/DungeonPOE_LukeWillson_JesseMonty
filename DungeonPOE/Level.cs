@@ -154,8 +154,27 @@ namespace DungeonPOE
         return new Position(randomX, randomY);
     }
 
+        //Swaps the positions of two tiles in the level's 2D array
+        public void SwapTiles(Tile firstTile, Tile secondTile)
+        {
+            //Store the first tile's coordinates
+            int firstX = firstTile.X;
+            int firstY = firstTile.Y;
+            //Store the second tile's coordinates
+            int secondX = secondTile.X;
+            int secondY = secondTile.Y;
+            //Swap the two tiles in the level's 2D array
+            tiles[firstX, firstY] = secondTile;
+            tiles[secondX, secondY] = firstTile;
+            //Update the two tiles' coordinates
+            firstTile.X = secondX;
+            firstTile.Y = secondY;
+            secondTile.X = firstX;
+            secondTile.Y = firstY;
+        }
 
-    public override string ToString()
+
+        public override string ToString()
         {
             string result = "";
 
