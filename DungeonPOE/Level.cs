@@ -14,6 +14,7 @@ namespace DungeonPOE
         private HeroTile hero;
         private ExitTile exit;
 
+
         //A single Random object is shared when selectting random tiles from the level
        private static Random random = new Random();
 
@@ -81,11 +82,16 @@ namespace DungeonPOE
                 tiles[heroPosition.X, heroPosition.Y] = hero;
             }
 
+            //Find empty spot for exit tile and create it
+            Position exitPosition = GetRandomEmptyPosition();
+
+            //create the exit tile and store it in the level's exit field
+            exit = (ExitTile)CreateTile(TileType.Exit, exitPosition);
+
             // Update the hero's surrounding vision tiles.
             hero.UpdateVision(this);
 
-            Position exitPosition = GetRandomEmptyPosition();
-            exit = (ExitTile)CreateTile(TileType.Exit, exitPosition);
+            
         }
 
 
@@ -99,12 +105,15 @@ namespace DungeonPOE
                 case TileType.empty:
                     tile = new EmptyTile(newposition);
                     break;
+
                 case TileType.wall:
                     tile = new WallTile(newposition);
                     break;
+
                 case TileType.Hero:
                 tile = new HeroTile(newposition);
                 break;
+
                 case TileType.Exit:
                     tile = new ExitTile(newposition);
                     break;

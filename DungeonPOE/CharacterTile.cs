@@ -38,24 +38,57 @@ namespace DungeonPOE
             get { return vision; }
         }
 
-        //Updates the four tiles tiles surrounding the character
+        // Updates the four tiles surrounding the character
         public void UpdateVision(Level level)
         {
-            //Retrieve the complete 2D array of tiles from the level
+            // Retrieve the full tile array from the level
             Tile[,] levelTiles = level.Tiles;
 
-            //Store the tile immediately above the character
-            vision[0] = levelTiles[X,Y - 1];
+            // Store the dimensions of the array
+            int width = levelTiles.GetLength(0);
+            int height = levelTiles.GetLength(1);
 
-            //Store the tile immediately to the right
-            vision[1] = levelTiles[X + 1, Y];
+            // Tile above the character.
+            if (Y - 1 >= 0)
+            {
+                vision[0] = levelTiles[X, Y - 1];
+            }
+            else
+            {
+                vision[0] = null;
+            }
 
-            //Store the tile immediately below the character
-            vision[2] = levelTiles[X, Y + 1];
+            // Tile to the right of the character
+            if (X + 1 < width)
+            {
+                vision[1] = levelTiles[X + 1, Y];
+            }
+            else
+            {
+                vision[1] = null;
+            }
 
-            //Store the tile immediately to the left
-            vision[3] = levelTiles[X - 1, Y];
+            // Tile below the character
+            if (Y + 1 < height)
+            {
+                vision[2] = levelTiles[X, Y + 1];
+            }
+            else
+            {
+                vision[2] = null;
+            }
+
+            // Tile to the left of the character.
+            if (X - 1 >= 0)
+            {
+                vision[3] = levelTiles[X - 1, Y];
+            }
+            else
+            {
+                vision[3] = null;
+            }
         }
+        
 
         //Reduces the character's hit points by the damage recieved
         public void TakeDamage(int damage)

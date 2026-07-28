@@ -66,7 +66,12 @@ namespace DungeonPOE
             //Convert the direction value to the matching index of the hero's vision array
             Tile targetTile = hero.Vision[(int)direction];
 
-            if(targetTile is ExitTile)
+            //Won't allow the hero to move if the target tile is null (i.e., there is no tile in that direction)
+            if (targetTile == null)
+            {
+                return false;
+            }
+            if (targetTile is ExitTile)
             {
                if (currentLevelNumber == numberOfLevels)
                 {
@@ -80,6 +85,11 @@ namespace DungeonPOE
                 NextLevel();
 
                 return true;
+            }
+
+            if(!(targetTile is EmptyTile))
+            {
+                return false;
             }
 
             //Swap the hero with the empty target tile
