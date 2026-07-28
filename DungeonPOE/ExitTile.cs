@@ -12,7 +12,7 @@ namespace DungeonPOE
 
         public override char Display
         {
-            get { return 'E'; } //needs to be the symbole but idk how 
+            get { return '□'; } //needs to be the symbole but idk how 
         }
     }
 }
