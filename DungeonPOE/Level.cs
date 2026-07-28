@@ -12,6 +12,7 @@ namespace DungeonPOE
 
         //Stores the hero of this level
         private HeroTile hero;
+        private ExitTile exit;
 
         //A single Random object is shared when selectting random tiles from the level
        private static Random random = new Random();
@@ -27,20 +28,23 @@ namespace DungeonPOE
         {
             get { return hero; }
         }
+
+        private ExitTile Exit
+        {
+            get { return exit;  }
+        }
         public enum TileType // more will be added later when we work on the enum (sidenote will be called as Level.TileType in other codes)
         {
             empty,
             wall,
-            Hero
+            Hero,
+            Exit
         }
 
         // Creates a level with the supplied width and height.
         // existingHero is optional. If no hero is supplied,
         // a new HeroTile will be created.
-        public Level(
-            int newwidth,
-            int newheight,
-            HeroTile existingHero = null)
+        public Level( int newwidth, int newheight, HeroTile existingHero = null)
         {
             // Store the dimensions of the level.
             width = newwidth;
@@ -79,6 +83,9 @@ namespace DungeonPOE
 
             // Update the hero's surrounding vision tiles.
             hero.UpdateVision(this);
+
+            Position exitPosition = GetRandomEmptyPosition();
+            exit = (ExitTile)CreateTile(TileType.Exit, exitPosition);
         }
 
 
@@ -98,6 +105,9 @@ namespace DungeonPOE
                 case TileType.Hero:
                 tile = new HeroTile(newposition);
                 break;
+                case TileType.Exit:
+                    tile = new ExitTile(newposition);
+                    break;
 
             default:
                 //Prevent invalid tile types from being created
