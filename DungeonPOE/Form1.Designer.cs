@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             lblDisplay = new Label();
+            lblTitle = new Label();
+            lblControls = new Label();
             SuspendLayout();
             // 
             // lblDisplay
@@ -40,19 +42,42 @@
             lblDisplay.TabIndex = 0;
             lblDisplay.Text = "lblDisplay";
             // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(163, 9);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(122, 15);
+            lblTitle.TabIndex = 1;
+            lblTitle.Text = "DUNGEON EXPLORER";
+            // 
+            // lblControls
+            // 
+            lblControls.AutoSize = true;
+            lblControls.Location = new Point(208, 69);
+            lblControls.Name = "lblControls";
+            lblControls.Size = new Size(38, 15);
+            lblControls.TabIndex = 2;
+            lblControls.Text = "label1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblControls);
+            Controls.Add(lblTitle);
             Controls.Add(lblDisplay);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Label lblDisplay;
+        private Label lblTitle;
+        private Label lblControls;
     }
 }
