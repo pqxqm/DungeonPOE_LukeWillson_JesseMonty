@@ -27,12 +27,19 @@ namespace DungeonPOE
         // Refreshes the dungeon displayed on the form.
         private void UpdateDisplay()
         {
+            // Show the latest game state.
             lblDisplay.Text = GameEngine.ToString();
 
-            // Keep the controls label underneath the dungeon.
+            // Keep the controls underneath the dungeon.
             lblControls.Location = new Point(
                 lblDisplay.Left,
                 lblDisplay.Bottom + 15
+            );
+
+            // Resize the form so the complete dungeon remains visible.
+            ClientSize = new Size(
+                Math.Max(450, lblDisplay.Right + 20),
+                Math.Max(350, lblControls.Bottom + 20)
             );
         }
 
