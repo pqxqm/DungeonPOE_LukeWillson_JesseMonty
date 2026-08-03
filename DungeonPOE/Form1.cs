@@ -1,5 +1,6 @@
 using System.Drawing.Text;
-
+using System.Drawing;
+using System.Windows.Forms;
 namespace DungeonPOE
 {
     public partial class Form1 : Form
@@ -9,6 +10,8 @@ namespace DungeonPOE
         public Form1()
         {
             InitializeComponent();
+
+            ApplyGameSyle();
             //Allows the form to receive key presses
             KeyPreview = true;
 
@@ -61,3 +64,30 @@ namespace DungeonPOE
 
     }
 }
+
+/*private void ApplyGameStyle()
+
+{
+    TextBox = "Dungeon Explorer"
+    BackColor = Color.FromArgb(20, 20, 25);
+    ForeColor = Color.White;
+
+    FormBorderSyle = FormBorderSyle.FixedSingle;
+    MaximizeBox = false;
+
+    StartPosition = FormStartPosition.CenterScreen;
+
+    Padding = new Padding(20);
+
+    lblDisplay.BackColor = Color.FromArgb(10, 10, 15);
+    lblDisplay.ForeColor = Color.LightGray;
+
+    lblDiplay.Font = new Font("Consolas",18,FontStyle.Bold);
+
+    lblDisplay.Padding = new Padding(12);
+
+    lblDisplay.AutoSize = true;
+
+    lblDisplay.Location = new Point(20, 50);
+}
+*/
